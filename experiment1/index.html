@@ -50,37 +50,29 @@
 						id="box"
 					></div>
 				</div>
-                <!-- <div class="fullscreen-box">
-                    <button id="fullscreen">Fullscreen</button>
-                </div> -->
 			</div>
 
 			<div class="minor-section">
 				<h2 style="text-align: center;">Description</h2>
 				<p style="padding-top: 2%;">
-					This is the first assignment for CMPM 147 @UCSC. The goal of this project is to demonstrate simple procedual generation in the form of short text. There are two options available for use. First, you can click 'generate' to generate a simple recipe in a 
-					'mad-lib' style format. This is done with simple regex pattern matching and string splicing. Thanks to Wes Modes @UCSC's CMPM dept. for providing the framework for this portion. The second button hooks up to a simple backend server that calls googles gemeni api,
-					asking it the prompt 'write me a funny cooking recipe in 150 words'. Enjoy!
+					This is the first assignment for CMPM 147 at UCSC. The goal of this project is to demonstrate simple procedural generation in the form of short text. There are two options available for use. First, you can click 'generate' to produce a simple recipe in a 'mad-lib' style format. This is achieved through simple regex pattern matching and string splicing. Special thanks to Wes Modes from UCSC's CMPM department for providing the framework for this portion. The second button connects to a simple backend server that calls Google's Gemeni API, prompting it with 'write me a funny cooking recipe in 150 words'. Enjoy!
 				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2 style="text-align: center;">Technical</h2>
 				<p style="padding-top: 2%;">
-					The first button provides a very simple example of procedural generation. Using JavaScript, a 2d array is defined, holding arrays of strings. The strings contain some pre-decided text which will be selected via regex pattern matching.
-					Then a starter 'story' that has been modified with the appropriate regex strings scattered througout it is refrenced and iterated through until a regex pattern is matched.
-					Once the pattern is matched, a simple function call replaces the pattern with the corresponding index of the previously mentioned array. The result is a (goofy) procedurally generated story.
+					The first button provides a straightforward example of procedural generation. Using JavaScript, a 2D array is defined, containing arrays of strings. These strings include some predetermined that I drafted. A starter 'story', modified with the appropriate regex strings scattered throughout it, is then referenced and iterated through until a regex pattern is matched. Once the pattern is identified, a simple function call replaces the pattern with the corresponding index from the previously mentioned array. The outcome is a (goofy) procedurally generated story.
 				</p>
 				<p style="padding-top: 2%;">
-					The second button puts in a request to a small backend server that I wrote. This server calls googles gemeni model and prompts it for a funny recipe. The recipe is then returned and sent to the screen. I wrote the server using Node.js.
+					The second button sends a request to a small backend server that I developed. This server calls Google's Gemeni model and prompts it to generate a funny recipe. The generated recipe is then returned and displayed on the screen. I built the server using Node.js with Express and hosted it on Heroku.
 				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2 style="text-align: center;">Reflection</h2>
 				<p style="padding-top: 2%;">
-					This was a unique introduction to procedual generation. I personally enjoyed creating the various strings for the main array of choices, as it felt similar to creating a 'choose your own adventure'.
-
+					This was a unique introduction to procedural generation. I personally enjoyed creating the various strings for the main array of choices, as it felt similar to creating a 'choose your own adventure'. Additionally, I took the opportunity to delve into full-stack web development and built a simple backend server, which was definitely a fun experience! I believe that generative models are incredibly powerful, and understanding how to integrate them into projects is essential.
 				</p>
 			</div>
 

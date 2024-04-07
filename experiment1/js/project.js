@@ -21,18 +21,17 @@ const template = `So, $person, you want to learn how to cook $food? Well, $silly
 function main() {
   clicker.onclick = generate
   clicker2.onclick = async () => {
+    clicker.disabled = true
     clicker2.disabled = true
     try{
       const response = await fetch('https://cjm-cmpm147-exp1-server-9ca07cef651f.herokuapp.com/api/data')
       const data = await response.text()
-
-      // .then(response => response.text())
-      // .then(data => {
       box.innerText = data
     } catch (error) {
       console.error('Error:', error);
     } finally {
       clicker2.disabled = false
+      clicker.disabled = false
     }
   }
 }
