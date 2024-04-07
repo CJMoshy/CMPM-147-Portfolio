@@ -19,18 +19,22 @@ const fillers = {
 const template = `So, $person, you want to learn how to cook $food? Well, $silly! First, you will need a $portion of $ingredients. Next, get yourself a $portion of $ingredients. Make sure to $instruction, in order to properly combine them. After that, you will need to $instructions. Once this is $fin, you should be left with something that almost closely resembles $foods! There you have it, $person. Thanks for cooking with JavaScript!`
 
 function main() {
-  clicker2.onclick = () => {
-    fetch('http://localhost:8080/api/data')
-    .then(response => response.text())
-    .then(data => {
-      box.innerText = data
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  }
-
   clicker.onclick = generate
+  clicker2.onclick = async () => {
+    clicker2.disabled = true
+    try{
+      const response = await fetch('https://cjm-cmpm147-exp1-server-9ca07cef651f.herokuapp.com/api/data')
+      const data = await response.text()
+
+      // .then(response => response.text())
+      // .then(data => {
+      box.innerText = data
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      clicker2.disabled = false
+    }
+  }
 }
 
 
