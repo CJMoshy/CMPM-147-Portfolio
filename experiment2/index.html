@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 2 - Procedurally Generated Landscapes</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/pico.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/site.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -22,25 +23,30 @@
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<script src="./js/lib/helpers/helpers.js"></script>
+    <script src="./js/lib/helpers/pair.js"></script>
+    <script src="./js/lib/shapes/cactus.js"></script>
+    <script src="./js/lib/shapes/mountain.js"></script>
+    <script src="./js/lib/shapes/perlinMountain.js"></script>
+    <script src="./js/sketch.js"></script>
+
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1 style="text-align: center;">Experiment 2 - Procedurally Generated Landscapes</h1>
 
 			<div class="minor-section">
-				<div id="canvas-container">
+				<div id="canvas-container" style="display: flex; justify-content: center;">
 					<!-- canvas will be added here -->
 				</div>
-                <div class="fullscreen-box">
+                <!-- <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
-                </div>
+                </div> -->
 			</div>
 
 			<div class="minor-section">

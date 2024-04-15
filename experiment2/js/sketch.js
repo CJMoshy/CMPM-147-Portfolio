@@ -1,79 +1,88 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// sketch.js - Proc gen landscape
+// Author: CJ Moshy
+// Date: 4/15/24
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+//Globals
+const WIDTH = 800
+const HEIGHT = 600
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+let x = -(WIDTH/2)
+let y = -(HEIGHT/2) + 25
 
-// Globals
-let myInstance;
-let canvasContainer;
-var centerHorz, centerVert;
+// mountains
+let x1 = new Mountain(35, 0, -250, 35, undefined, [79, 64, 50])
+let x2 = new Mountain(35, 0, -220, 35, undefined, [119, 98, 77])
+let x3 = new perlinMountain(0)
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
+//cacti
+let c1 = new Cactus(200, 100, 25, 90, 1.0)
+let c2 = new Cactus(150, 150, 25, 90, 1.0)
+let c3 = new Cactus(90, 200, 25, 90, 1.0)
 
-    myMethod() {
-        // code to run when method is called
-    }
-}
 
 function resizeScreen() {
   centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
   centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
   console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
+  resizeCanvas(WIDTH, HEIGHT);
+  redrawCanvas(); // Redraw everything based on new size
 }
 
 // setup() function is called once when the program starts
 function setup() {
   // place our canvas, making it fit our container
-  canvasContainer = $("#canvas-container");
-  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-  canvas.parent("canvas-container");
+  canvasContainer = $("#canvas-container")
+  let canvas = createCanvas(WIDTH, HEIGHT, WEBGL)
+  canvas.parent("canvas-container")
   // resize canvas is the page is resized
-
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
-
-  $(window).resize(function() {
+  $(window).resize(function () {
     resizeScreen();
-  });
-  resizeScreen();
+  })
+  frameRate(60)
+  background(199, 179, 191)
+  x3.generatePerlinMountains()
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
-  noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+  //background color
+  background(199, 179, 191)
+  noStroke()
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+  //incrment x for translation of sphere
+  x += 0.5 
+  x > WIDTH ? x = 20 : undefined
+ 
+  //don't rotate and translate the other things 
+  push()
+  fill(255, 255, 0); // Sphere color
+  translate(x, y) // Move the sphere to its position
+  sphere(20) // Draw the sphere
+  pop()
+
+  //set fill color for ground
+  fill(227, 191, 144)
+  rect(-(WIDTH / 2), 0, 800, (HEIGHT / 2))  
+
+  // render the mountains
+  x1.render()
+  x2.render()
+  x3.render()
+
+  //render the cacti
+  c1.show()
+  c2.show()
+  c3.show()
+
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
+//interactivity
 function mousePressed() {
-    // code to run when mouse is pressed
+  x1.reset()
+  x2.reset()
+  x3.reset()
+  x3.generatePerlinMountains(0)
+  c1.generate()
+  c2.generate()
+  c3.generate()
 }
