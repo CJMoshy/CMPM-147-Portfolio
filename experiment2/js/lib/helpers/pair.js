@@ -1,20 +1,21 @@
-class Pair{
+//written by CJ Moshy
+class Pair {
     /**
     * @param {number} x the x coordinate
     * @param {number} y the y coordinate
     */
-    constructor(x,y){
+    constructor(x, y) {
         this.first = x
         this.second = y
     }
 
     // I know these are all redundant because JS just lets us tap into any member variable. However this is best practice in OOP
-    
+
     /**
     * @function getPair standard getter
     * @returns {Pair} current instance of the object
     */
-    getPair(){
+    getPair() {
         return this
     }
 
@@ -22,7 +23,7 @@ class Pair{
     * @function getFirst standard getter
     * @returns {number} the x coord
     */
-    getFirst(){
+    getFirst() {
         return this.first
     }
 
@@ -30,7 +31,7 @@ class Pair{
     * @function getSecond standard getter
     * @returns {number} the y coord
     */
-    getSecond(){
+    getSecond() {
         return this.second
     }
 
@@ -38,7 +39,7 @@ class Pair{
     * @function setFirst standard setter
     * @returns {number} the y coord
     */
-    setFirst(x){
+    setFirst(x) {
         this.first = x
     }
 
@@ -46,7 +47,7 @@ class Pair{
     * @function setSecond standard setter
     * @returns {number} the y coord
     */
-    setSecond(y){
+    setSecond(y) {
         this.second = y
     }
 }

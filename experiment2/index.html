@@ -18,11 +18,13 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
+
 	<!-- Load p5.js library -->
 	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
+
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
 	<script src="./js/lib/helpers/helpers.js"></script>
@@ -37,36 +39,40 @@
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
-
 			<h1 style="text-align: center;">Experiment 2 - Procedurally Generated Landscapes</h1>
 
 			<div class="minor-section">
+				<h1 style="text-align: center; margin-bottom: 2.5%; margin-top: 2.5%;">Click Anywhere to Reinterpret</h1>
 				<div id="canvas-container" style="display: flex; justify-content: center;">
-					<!-- canvas will be added here -->
 				</div>
-                <!-- <div class="fullscreen-box">
-                    <button id="fullscreen">Fullscreen</button>
-                </div> -->
 			</div>
 
 			<div class="minor-section">
-				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<h2 style="margin-bottom: 2%;">Description</h2>
+				<p>This experiment was done with an emphasis on the use of Perlin noise for procedural generation. 
+					What you are looking at is a sketch done with p5.js that depicts a desert landscape. This was done by using both Perlin noise and a 
+					custom noise function that uses a modified linear interpolation formula to sketch some jagged mountains.</p>
 			</div>
 
 			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<h2 style="margin-bottom: 2%;">Technical</h2>
+				<p> The technicallity here is seen mainly in the two further back mountain ranges. These mountain ranges are generated via an abstraction on top of the underlying principles of Perlin noise. Initially, a range of 2-dimensional vectors are generated to model an outline for the mountains to be created.
+					After this, the vectors are passed to a function which iterates through them and uses linear interpolation to calculate a mid point. This mid point is then adjuseted with a 'noise' modifier, which adds some randomness to the mountains and gives them the signature jagged feel. Finally, p5.js is used to create a shape within all of the points. 
+					This shape is then filled with a color and rendered to the canvas. I approached this problem with an OOP style mindset, creating an object that handles all of the heavy lifting, with a render() function that can be called within draw() to render the mountains. The reason why I choose to use OOP here is because I think that it provided a clear way to organize the logic for creating a single mouintain range into one area of the codebase.
+					In additon, an OOP approach allows me to set custom colors and parameters for each mountain range, and create multiple instances each with the aformentioned unique qualitites. 
+				</p>
+				<p>
+					The closest mountain range is generated via 'true' Perlin Noise. This was done to model the differences between the algorithm I created and Perlins. As you can see, the Perlin mouintains are much smoother. The main reason for this is becase my algorithim opts for linear interpolation to connect the intial points whereas Perlin noise models something much closer to cubic interpolation, which creaetes much smoother curves. 
+				</p>
 			</div>
 
 			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<h2 style="margin-bottom: 2%;">Reflection</h2>
+				<p>Looking back on this assignment, I thoroughly enjoyed it. I appreciated the inspiration that was given to us by Professor Modes, with both the simplified and complex examples. In addition, I enjoyed doing a lot of the research about Perlin noise, as it's a technique that I have seen other developers use before and I was unsure about its inner workings. This assignment was also flexible enough to allow me to do custom work, furthering my knowledge in some basic procedural generation. If I were to change anything about the project, I would implement cubic interpolation alongside linear interpolation. This would provide much smoother curves for the mountains, and give more contrast to the types of mountains that could be generated. However, I am satisfied with how the linear interpolation turned out. It was a very interesting process learning about all of the different types of interpolation and the results and styles that they produce. </p>
 			</div>
 
 		</section>
-		<nav id="links" class="minor-section">
-			<!-- Put link back to homepage here. -->
+		<nav id="links" class="minor-section" style="justify-content: center;">
             <ul>
                 <li><a href="../index.html">Home</a></li>
             </ul>

@@ -1,9 +1,10 @@
+//written by CJ Moshy
 class perlinMountain {
 
     constructor(_lowerbound = 0) {
         this.arr = []
         this.lb = _lowerbound
-        this.padding = 10
+        this.padding = 12.5
     }
 
     reset() {
@@ -15,14 +16,13 @@ class perlinMountain {
     * 
     */
     generatePerlinMountains() {
-
         // Set the noise level and scale.
         let noiseLevel = getRandom(-150, -60);
-        let noiseScale = 0.02 
+        let noiseScale = 0.02
 
         let x = (-(WIDTH / 2)) - this.padding
 
-        while(x < WIDTH/2 + (this.padding*2)){
+        while (x < WIDTH / 2 + (this.padding * 2)) {
             // Scale the input coordinate.
             let nx = noiseScale * x;
             // Compute the noise value.
@@ -39,10 +39,10 @@ class perlinMountain {
         fill(139, 115, 85)
         beginShape()
         vertex(-(WIDTH / 2) - 10, this.lb)
-        for(let i = 0; i < this.arr.length - 1; i++){
+        for (let i = 0; i < this.arr.length - 1; i++) {
             vertex(this.arr[i].getFirst(), this.arr[i].getSecond())
         }
-        vertex((WIDTH/2), this.lb)
+        vertex((WIDTH / 2), this.lb)
         endShape(CLOSE)
     }
 

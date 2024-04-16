@@ -51,7 +51,7 @@ function draw() {
 
   //incrment x for translation of sphere
   x += 0.5 
-  x > WIDTH ? x = 20 : undefined
+  x > WIDTH ? x =  -(WIDTH/2) : undefined
  
   //don't rotate and translate the other things 
   push()
