@@ -56,13 +56,13 @@
 
 			<div class="minor-section">
 				<h2 style="margin-bottom: 2%;">Technical</h2>
-				<p> The technicallity here is seen mainly in the two further back mountain ranges. These mountain ranges are generated via an abstraction on top of the underlying principles of Perlin noise. Initially, a range of 2-dimensional vectors are generated to model an outline for the mountains to be created.
-					After this, the vectors are passed to a function which iterates through them and uses linear interpolation to calculate a mid point. This mid point is then adjuseted with a 'noise' modifier, which adds some randomness to the mountains and gives them the signature jagged feel. Finally, p5.js is used to create a shape within all of the points. 
+				<p> The technicallity here is seen mainly in the two further back mountain ranges. These mountain ranges are generated using some of the basic principles of Perlin noise. Initially, a range of 2-dimensional vectors are generated, modeling an outline for the mountains.
+					After this, the vectors are passed to a function which iterates them, using linear interpolation to calculate a mid point. This mid point is then adjusted with a 'noise' modifier, which adds some randomness to the mountains and gives them the signature jagged feel. Finally, p5.js is used to create a shape from the points. 
 					This shape is then filled with a color and rendered to the canvas. I approached this problem with an OOP style mindset, creating an object that handles all of the heavy lifting, with a render() function that can be called within draw() to render the mountains. The reason why I choose to use OOP here is because I think that it provided a clear way to organize the logic for creating a single mouintain range into one area of the codebase.
 					In additon, an OOP approach allows me to set custom colors and parameters for each mountain range, and create multiple instances each with the aformentioned unique qualitites. 
 				</p>
 				<p>
-					The closest mountain range is generated via 'true' Perlin Noise. This was done to model the differences between the algorithm I created and Perlins. As you can see, the Perlin mouintains are much smoother. The main reason for this is becase my algorithim opts for linear interpolation to connect the intial points whereas Perlin noise models something much closer to cubic interpolation, which creaetes much smoother curves. 
+					The closest mountain range is generated via 'true' Perlin Noise. This was done to model the differences between the algorithm I created and the Perlin algorithm. As you can see, the Perlin mouintains are much smoother. The main reason for this is becase my algorithim opts for linear interpolation to connect the intial points whereas Perlin noise models something much closer to cubic interpolation, which creaetes much smoother curves. 
 				</p>
 			</div>
 
