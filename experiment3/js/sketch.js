@@ -27,11 +27,15 @@ function setup() {
     resizeScreen();
   });
   resizeScreen();
+
+  reseed()
+  
+
 }
 
 // draw() function is called repeatedly, it's the main animation loop
-function draw() {
-  background(220)  
+function draw() { 
+  reparseGrid()
 }
 
 const array = [
@@ -53,6 +57,3 @@ const array = [
   ['-', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd', 'w', 'd']
 ];
 
-
-
-regenerateGrid()
