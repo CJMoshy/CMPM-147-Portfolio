@@ -22,6 +22,8 @@
 	<!-- Load p5.js library -->
 	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
 	<script type="text/javascript" src="../js/site.js" DEFER></script>
 
@@ -37,12 +39,16 @@
 
 			<h1 style="text-align: center;">Experiment 3 - Procedurally Generated Tilemaps</h1>
 
-			<div class="minor-section" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
-				<button id="reseedButton" style="margin-bottom: 2%;">reseed</button>
-				<span id="seedReport"></span>
-				<div id="canvas-container" style="margin-bottom: 2%;"></div>
-				<textarea cols="20" rows="20" id="asciiBox"
-					style="opacity: 0.5; letter-spacing: 1ex; width: 300px; height: 150px; margin-bottom: 2%; font-family: monospace;"></textarea>
+			<div class="minor-section" >
+				<span id="seedReport1"></span>
+				<div id="canvas-container" style="width: 100%; height: 600px; margin-bottom: 2%;"></div>
+				<span id="seedReport2"></span>
+				<div id="canvas-container2" style="width: 100%; height: 600px; margin-bottom: 2%;"></div>
+				<textarea cols="32" rows="32" id="asciiBox"
+					style="opacity: 0.5; letter-spacing: 1ex; width: 100%; height: 300px; margin-bottom: 2%; font-family: monospace;"></textarea>
+
+				<textarea cols="32" rows="32" id="asciiBox2"
+					style="opacity: 0.5; letter-spacing: 1ex; width: 100%; height: 300px; margin-bottom: 2%; font-family: monospace;"></textarea>
 			</div>
 
 			<div class="minor-section">
