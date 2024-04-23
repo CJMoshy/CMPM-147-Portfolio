@@ -8,45 +8,25 @@
  */
 
 //******************GLOBALS */
-const numRows = 32, numCols = 32
+const numRows = 30, numCols = 30
 
-
-const lookup = [
-    [14, 0], //0 
-    [2, 10], //1
-    [1, 11], //2
-    [2, 11], //3
-    [1, 9], //4
-    [2, 9], //5
-    [3, 2], //6
-    [14, 0], //7
-    [0, 10], //8 
-    [14, 0], //9
-    [2, 4], //10
-    [14, 0], //11
-    [2, 11], //12
-    [14, 0], //13
-    [14, 0], //14
-    [14, 0] //15
-]
-
-const lookupOffset = [
+const tileRefrence = [
     [0, 0], //0 
-    [0, -1], //1
-    [-1, 0], //2
-    [-1, 0], //3
-    [0.65, 0], //4
-    [0.5, 0], //5
+    [0, 0], //1
+    [0, 0], //2
+    [6, -12], //3
+    [0, 0], //4
+    [4, -12], //5
     [0, 0], //6
-    [0, 0], //7
-    [0, 0.6], //8 
-    [0, 0], //9
-    [0, 0], //10
-    [0, 0], //11
-    [0, 0], //12
-    [0, 0], //13
-    [0, 0], //14
-    [0, 0] //15
+    [10, -12], //7
+    [0, 0], //8 
+    [14, 0], //9
+    [6, -14], //10
+    [6, -13], //11
+    [4, -14], //12
+    [4, -13], //13
+    [5, -14], //14
+    [14, 0] //15
 ]
 
 //********************FUNCTIONS */
@@ -152,14 +132,13 @@ function placeTile(p5, i, j, ti, tj) {
  * @param {number} numRows the number of rows that will be generated
  * @returns {void}
  */
-function generateGrid(p5, numCols, numRows) { //this guy is about to get disgusting LMAO
+function generateGrid(p5, numCols, numRows) {
 
-    p5.currentGrid = []
+    p5.currentGrid = [] //clear the current grid
     Math.seedrandom(p5.seed) //set seed 
 
     switch (p5.ref) {
         case 1:
-
             for (let i = 0; i < numRows; i++) {
                 let tmp = []
                 for (let j = 0; j < numCols; j++) {
@@ -168,9 +147,8 @@ function generateGrid(p5, numCols, numRows) { //this guy is about to get disgust
                 p5.currentGrid.push(tmp)
             }
             drawRiver(p5, getRandom(0, 28), getRandom(0, 28))
-            drawTrees(p5)
+            // drawTrees(p5)
             break
-
         case 2:
             for (let i = 0; i < numRows; i++) {
                 let tmp = []
@@ -181,6 +159,7 @@ function generateGrid(p5, numCols, numRows) { //this guy is about to get disgust
                 }
                 p5.currentGrid.push(tmp)
             }
+            BSP(p5)
             break
         default:
             break
@@ -194,30 +173,29 @@ function generateGrid(p5, numCols, numRows) { //this guy is about to get disgust
  */
 function drawGrid(p5) {
     p5.randomSeed(p5.seed)
-
-    p5.background(128)
-
     for (let i = 0; i < p5.currentGrid.length; i++) {
         for (let j = 0; j < p5.currentGrid[i].length; j++) {
             if (p5.currentGrid[i][j] == '-') {
-                placeTile(p5, i , j, (p5.floor(p5.random(4))), 0, 0)
-                drawContext(p5, i , j, 'r')
+                placeTile(p5, i , j, p5.random(0, 3), 0)
             }
-            // if (p5.currentGrid[i][j] == '.') {
-            //     placeTile(p5, i, j, 0, 0);
-            // }
-            // if (p5.currentGrid[i][j] == '+') {
-            //     placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 22);
-            // }
-            // if (p5.currentGrid[i][j] == '=') {
-            //     placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 23);
-            // }
+            if (p5.currentGrid[i][j] == '+') {
+                placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 22);
+            }
+            if (p5.currentGrid[i][j] == '=') {
+                placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 23);
+            }
             if (p5.currentGrid[i][j] == 'r') {
-                placeTile(p5, i , j, (p5.floor(p5.random(3))), 14, 0);
+                //tie in with mili()
+                // let currentTime = 0
+                // if(p5.millis() % 10 === 0){
+                //     currentTime = p5.millis()
+                //     placeTile(p5, i , j, 1, 14)
+                //     drawContext(p5, i , j, 'r', 0, 14)
+                // } else {
+                    placeTile(p5, i , j, 0, 14)
+                    drawContext(p5, i , j, 'r', 0, 14)
+                // }
             }
-            // if(p5.currentGrid[i][j] == 'b'){
-            //     placeTile(p5, i, j, (p5.floor(p5.random(3))), 4)
-            // }
             if (p5.currentGrid[i][j] == 't') {
                 placeTile(p5, i , j, 16, 1, 0)
             }
@@ -250,6 +228,14 @@ function drawRiver(p5, x_init, y_init) {
 
     for (let i = 0; i < LIMIT; i++) {
         p5.currentGrid[x_init][y_init] = 'r'
+
+        if(x_init + 1 < numRows && y_init + 1 < numCols) {
+            p5.currentGrid[x_init + 1][y_init + 1] = 'r'
+        }
+        if(x_init - 1 > 0 && y_init - 1 >0) {
+            p5.currentGrid[x_init - 1][y_init - 1] = 'r'
+        }
+
         let deciderA = Math.round(Math.random())
         let deciderB = Math.round(Math.random())
         let decider = Math.round(Math.random())
@@ -262,8 +248,8 @@ function drawRiver(p5, x_init, y_init) {
             y_init >= 28 ? y_init = 28 : undefined
             y_init <= 0 ? y_init = 0 : undefined
         }
-        // gridCode(p5, x_init, y_init, 'r', 'b')
     }
+    fillRiver(p5)
 }
 
 /**
@@ -281,6 +267,18 @@ function drawTrees(p5) {
         }
     }
 }
+
+
+// function animateWater(p5){
+//     isAnimating = true
+//     for (let i = 0; i < p5.currentGrid.length; i++) {
+//         for (let j = 0; j < p5.currentGrid[i].length; j++) {
+//             if(gridCode(p5, i, j, 'r') === 15){
+//                 intervalIDs.push(setInterval( () => { console.log ('tick');placeTile(p5, i , j, (p5.floor(p5.random(3))), 14, 0)}, getRandom(60, 120)))
+//             }
+//         }
+//     }
+// }
 
 /**
  * @function gridCheck verify that the coordinates given are within bounds of the main drawing array
@@ -322,17 +320,76 @@ function gridCode(p5, i, j, target) {
  * @param {string} target the target string or char '' to look for
  * @returns {void}
  */
-function drawContext(p5, i, j, target) {
 
+function drawContext(p5, i, j, target, ti, tj) {
     if (gridCode(p5, i, j, target) != 0) {
-        // console.log(' here is the grid code... ', gridCode(p5, i, j, target))
-        // console.log('found an occourence of something at ', i, ' ', j, '  ', gridCode(p5, i , j, target))
-        const [tioffset, tjoffset] = lookup[gridCode(p5, i, j, target)]
-        const [tjoffset1, tioffset1] = lookupOffset[gridCode(p5, i, j, target)]
-        // console.log(tioffset, tjoffset)
-        placeTile(p5, i + tioffset1, j + tjoffset1, tjoffset, tioffset)
+        if(gridCode(p5, i , j, target) === 8){
+            placeTile(p5, i , j, ti + 5, tj + (-14))
+            placeTile(p5, i , j, ti + 4, tj + (-14))
+            placeTile(p5, i , j, ti + 6, tj + (-14))
+        } else if(gridCode(p5, i , j, target) === 1){
+            placeTile(p5, i , j, ti + 4, tj + (-12))
+            placeTile(p5, i , j, ti + 5, tj + (-12))
+            placeTile(p5, i , j, ti + 6, tj + (-12))
+        } else if(gridCode(p5, i , j, target) === 2){
+            placeTile(p5, i , j, ti + 6, tj + (-12))
+            placeTile(p5, i , j, ti + 6, tj + (-13))
+            placeTile(p5, i , j, ti + 6, tj + (-14))
+        } else if(gridCode(p5, i , j, target) === 4){
+            placeTile(p5, i , j, ti + 4, tj + (-12))
+            placeTile(p5, i , j, ti + 4, tj + (-13))
+            placeTile(p5, i , j, ti + 4, tj + (-14))
+        } else if(gridCode(p5, i , j, target) === 6){
+            placeTile(p5, i , j, ti + 5, tj + (-12))
+            placeTile(p5, i , j, ti + 5, tj + (-14))
+        } else{
+            const [tioffset, tjoffset] = tileRefrence[gridCode(p5, i, j, target)]
+            placeTile(p5, i , j, ti + tioffset, tj + tjoffset)
+        }
         return true
     }
     return false
 }
 
+function BSP(p5){
+//     Initialize Space:
+// Start with a single large rectangle representing the entire dungeon or area.
+// Partition Space:
+// Choose a random point along the longer side of the rectangle.
+// Divide the rectangle into two smaller rectangles using a vertical or horizontal line passing through the chosen point.
+// Repeat the partitioning process recursively for each new subspace until the desired number of rooms or a minimum size is reached.
+// Room Placement:
+// Once the partitioning is complete, rooms can be placed within the generated partitions.
+// Rooms can be placed randomly, following specific patterns, or based on certain constraints (e.g., avoiding overlapping or intersecting with walls).
+// Corridor Generation:
+// After placing rooms, corridors can be added to connect the rooms and create a coherent dungeon layout.
+// Corridors can be generated by connecting adjacent rooms or by extending the partitions through the space to create paths between rooms.
+
+    let x = getRandom(0, 28)
+    let y = getRandom(0, 28)
+
+    for(let i = 0; i < 10; i++){
+
+        // console.log(x, y)
+        p5.currentGrid[x][y] = 'c'
+
+        if(x > numRows / 2){
+           x < numRows - 1 ? x+=1 : undefined
+        }else{
+            x > 0 ? x -= 1 : undefined
+        }
+    }
+}
+
+//here we want to walk through the array and look for non water tiles that are surounded by 3 or more water tiles, then replace with water
+function fillRiver(p5){
+    for (let i = 0; i < p5.currentGrid.length; i++) {
+        for (let j = 0; j < p5.currentGrid[i].length; j++) {
+            if(p5.currentGrid[i][j] === '-'){
+                if(gridCode(p5, i, j, 'r') === 15 || gridCode(p5, i, j, 'r') === 7){
+                    p5.currentGrid[i][j] = 'r'
+                }
+            }
+        }
+    }
+}

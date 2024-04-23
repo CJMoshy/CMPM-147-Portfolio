@@ -16,7 +16,6 @@ $(document).ready(() => {
     sketch.setup = () => {
       let canvas1 = sketch.createCanvas(canvasContainer.width(), canvasContainer.height())
       canvas1.parent("canvas-container")
-      sketch.angleMode(sketch.DEGREES)
       let reseedButton = sketch.createButton('Reseed')
       reseedButton.position(10, 10)
       reseedButton.mousePressed(() => {
