@@ -1,8 +1,6 @@
 /**
  * written by CJ Moshy on 4/20/24
- * 
- * 
- * 
+ * designed for CMPM 147 : Generative Methods
  * 
  * 
  */
@@ -29,6 +27,11 @@ const tileRefrence = [
     [14, 0] //15
 ]
 
+//animation logic globals
+
+let timeTracker1 = 0
+let shouldBeWater = false
+let rowLenCount = 0
 //********************FUNCTIONS */
 
 /**
@@ -47,6 +50,8 @@ function getRandom(min, max) {
  * @returns {void}
  */
 function reseed(p5) {
+    timeTracker1 = p5.millis() / 1000
+    shouldBeWater = false
     p5.seed += 1
     p5.ref === 1 ? p5.select("#seedReport1").html("seed: " + p5.seed.toString()) : p5.select("#seedReport2").html("seed: " + p5.seed.toString())
     regenerateGrid(p5)
@@ -147,19 +152,20 @@ function generateGrid(p5, numCols, numRows) {
                 p5.currentGrid.push(tmp)
             }
             drawRiver(p5, getRandom(0, 28), getRandom(0, 28))
-            // drawTrees(p5)
+            drawRocks(p5)
+            drawTrees(p5)
+            // drawTower(p5)
             break
         case 2:
             for (let i = 0; i < numRows; i++) {
                 let tmp = []
                 for (let j = 0; j < numCols; j++) {
-                    //todo - more sophisticad algo
                     let decider = Math.round(Math.random())
                     decider === 0 ? tmp.push('+') : tmp.push('=')
                 }
                 p5.currentGrid.push(tmp)
             }
-            BSP(p5)
+            generateHallway(p5)
             break
         default:
             break
@@ -172,32 +178,50 @@ function generateGrid(p5, numCols, numRows) {
  * @returns {void}
  */
 function drawGrid(p5) {
+
+    shouldBeWater = !shouldBeWater
+
     p5.randomSeed(p5.seed)
     for (let i = 0; i < p5.currentGrid.length; i++) {
         for (let j = 0; j < p5.currentGrid[i].length; j++) {
-            if (p5.currentGrid[i][j] == '-') {
-                placeTile(p5, i , j, p5.random(0, 3), 0)
+            if (rowLenCount === 0) {
+                rowLenCount = p5.currentGrid[i].length
+            } else rowLenCount -= 1
+            if (p5.currentGrid[i][j] == '-') { //grass
+                placeTile(p5, i, j, p5.random(0, 3), 0)
             }
+            if (p5.currentGrid[i][j] == 'w') { //water
+                if (shouldBeWater && p5.currentGrid[i][rowLenCount] == 'w') {
+                    placeTile(p5, i, j, 1, 14)
+                    drawContext(p5, i, j, 'w', 0, 14)
+                } else {
+                    placeTile(p5, i, j, 0, 14)
+                    drawContext(p5, i, j, 'w', 0, 14)
+                }
+            }
+            if (p5.currentGrid[i][j] == 'r') { //rock
+                placeTile(p5, i, j, p5.random(0, 3), 0)
+                placeTile(p5, i, j, 14, 15)
+            }
+            if (p5.currentGrid[i][j] == 't') { //tree
+                placeTile(p5, i, j, p5.random(0, 3), 0)
+                placeTile(p5, i, j, 14, 0)
+            }
+
+            //***********************DUNGEON */
+
             if (p5.currentGrid[i][j] == '+') {
-                placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 22);
+                placeTile(p5, i, j, (p5.floor(p5.random(11, 13))), 22);
             }
             if (p5.currentGrid[i][j] == '=') {
-                placeTile(p5, i, j, (p5.floor(p5.random(10, 13))), 23);
+                placeTile(p5, i, j, (p5.floor(p5.random(11, 13))), 23);
             }
-            if (p5.currentGrid[i][j] == 'r') {
-                //tie in with mili()
-                // let currentTime = 0
-                // if(p5.millis() % 10 === 0){
-                //     currentTime = p5.millis()
-                //     placeTile(p5, i , j, 1, 14)
-                //     drawContext(p5, i , j, 'r', 0, 14)
-                // } else {
-                    placeTile(p5, i , j, 0, 14)
-                    drawContext(p5, i , j, 'r', 0, 14)
-                // }
+            if (p5.currentGrid[i][j] == 'c') {
+                placeTile(p5, i, j, 0, 23);
+                drawContext(p5, i, j, 'c', 0, 23)
             }
-            if (p5.currentGrid[i][j] == 't') {
-                placeTile(p5, i , j, 16, 1, 0)
+            if (p5.currentGrid[i][j] == 'T') {
+                placeTile(p5, i, j, (p5.floor(p5.random(0, 6))), 30);
             }
         }
     }
@@ -227,15 +251,13 @@ function drawRiver(p5, x_init, y_init) {
     const LIMIT = 75
 
     for (let i = 0; i < LIMIT; i++) {
-        p5.currentGrid[x_init][y_init] = 'r'
-
-        if(x_init + 1 < numRows && y_init + 1 < numCols) {
-            p5.currentGrid[x_init + 1][y_init + 1] = 'r'
+        p5.currentGrid[x_init][y_init] = 'w'
+        if (x_init + 1 < numRows && y_init + 1 < numCols) {
+            p5.currentGrid[x_init + 1][y_init + 1] = 'w'
         }
-        if(x_init - 1 > 0 && y_init - 1 >0) {
-            p5.currentGrid[x_init - 1][y_init - 1] = 'r'
+        if (x_init - 1 > 0 && y_init - 1 > 0) {
+            p5.currentGrid[x_init - 1][y_init - 1] = 'w'
         }
-
         let deciderA = Math.round(Math.random())
         let deciderB = Math.round(Math.random())
         let decider = Math.round(Math.random())
@@ -253,6 +275,24 @@ function drawRiver(p5, x_init, y_init) {
 }
 
 /**
+ * @function drawRocks randomly places some rocks on the canvas
+ * @param {p5.instance} p5 the current p5 instance to act upon
+ * @returns {void}
+ */
+function drawRocks(p5) {
+    for (let i = 1; i < p5.currentGrid.length - 1; i++) {
+        for (let j = 1; j < p5.currentGrid[i].length - 1; j++) {
+            if (p5.currentGrid[i][j] !== 'w') {
+                let decider = Math.random()
+                if (decider > 0.99) {
+                    p5.currentGrid[i][j] = 'r'
+                }
+            }
+        }
+    }
+}
+
+/**
  * @function drawTrees randomly places some trees on the canvas
  * @param {p5.instance} p5 the current p5 instance to act upon
  * @returns {void}
@@ -260,25 +300,15 @@ function drawRiver(p5, x_init, y_init) {
 function drawTrees(p5) {
     for (let i = 1; i < p5.currentGrid.length - 1; i++) {
         for (let j = 1; j < p5.currentGrid[i].length - 1; j++) {
-            if (p5.currentGrid[i][j] !== 'r' && p5.currentGrid[i][j] !== 'b') {
+            if (p5.currentGrid[i][j] !== 'w' && p5.currentGrid[i][j] !== 'b' && p5.currentGrid[i][j] !== 't') {
                 let decider = Math.random()
-                decider > 0.99 ? p5.currentGrid[i][j] = 't' : undefined
+                if (decider > 0.99) {
+                    p5.currentGrid[i][j] = 't'
+                }
             }
         }
     }
 }
-
-
-// function animateWater(p5){
-//     isAnimating = true
-//     for (let i = 0; i < p5.currentGrid.length; i++) {
-//         for (let j = 0; j < p5.currentGrid[i].length; j++) {
-//             if(gridCode(p5, i, j, 'r') === 15){
-//                 intervalIDs.push(setInterval( () => { console.log ('tick');placeTile(p5, i , j, (p5.floor(p5.random(3))), 14, 0)}, getRandom(60, 120)))
-//             }
-//         }
-//     }
-// }
 
 /**
  * @function gridCheck verify that the coordinates given are within bounds of the main drawing array
@@ -296,7 +326,7 @@ function gridCheck(p5, i, j, target) {
 
 /**
  * @function gridCode runs a bitmask verification on each tile
- * @param {p5.instance} p5 
+ * @param {p5.instance} p5 the current p5 instance to act upon 
  * @param {number} i the i coordinate
  * @param {number} j the j coordinate
  * @param {string} target the target string or char '' to look for
@@ -314,7 +344,7 @@ function gridCode(p5, i, j, target) {
 
 /**
  * @function drawContext renders the bitmask tiles to the scene
- * @param {p5.instance} p5 
+ * @param {p5.instance} p5 the current p5 instance to act upon
  * @param {number} i the i coordinate
  * @param {number} j the j coordinate
  * @param {string} target the target string or char '' to look for
@@ -322,72 +352,125 @@ function gridCode(p5, i, j, target) {
  */
 
 function drawContext(p5, i, j, target, ti, tj) {
-    if (gridCode(p5, i, j, target) != 0) {
-        if(gridCode(p5, i , j, target) === 8){
-            placeTile(p5, i , j, ti + 5, tj + (-14))
-            placeTile(p5, i , j, ti + 4, tj + (-14))
-            placeTile(p5, i , j, ti + 6, tj + (-14))
-        } else if(gridCode(p5, i , j, target) === 1){
-            placeTile(p5, i , j, ti + 4, tj + (-12))
-            placeTile(p5, i , j, ti + 5, tj + (-12))
-            placeTile(p5, i , j, ti + 6, tj + (-12))
-        } else if(gridCode(p5, i , j, target) === 2){
-            placeTile(p5, i , j, ti + 6, tj + (-12))
-            placeTile(p5, i , j, ti + 6, tj + (-13))
-            placeTile(p5, i , j, ti + 6, tj + (-14))
-        } else if(gridCode(p5, i , j, target) === 4){
-            placeTile(p5, i , j, ti + 4, tj + (-12))
-            placeTile(p5, i , j, ti + 4, tj + (-13))
-            placeTile(p5, i , j, ti + 4, tj + (-14))
-        } else if(gridCode(p5, i , j, target) === 6){
-            placeTile(p5, i , j, ti + 5, tj + (-12))
-            placeTile(p5, i , j, ti + 5, tj + (-14))
-        } else{
-            const [tioffset, tjoffset] = tileRefrence[gridCode(p5, i, j, target)]
-            placeTile(p5, i , j, ti + tioffset, tj + tjoffset)
-        }
-        return true
-    }
-    return false
-}
-
-function BSP(p5){
-//     Initialize Space:
-// Start with a single large rectangle representing the entire dungeon or area.
-// Partition Space:
-// Choose a random point along the longer side of the rectangle.
-// Divide the rectangle into two smaller rectangles using a vertical or horizontal line passing through the chosen point.
-// Repeat the partitioning process recursively for each new subspace until the desired number of rooms or a minimum size is reached.
-// Room Placement:
-// Once the partitioning is complete, rooms can be placed within the generated partitions.
-// Rooms can be placed randomly, following specific patterns, or based on certain constraints (e.g., avoiding overlapping or intersecting with walls).
-// Corridor Generation:
-// After placing rooms, corridors can be added to connect the rooms and create a coherent dungeon layout.
-// Corridors can be generated by connecting adjacent rooms or by extending the partitions through the space to create paths between rooms.
-
-    let x = getRandom(0, 28)
-    let y = getRandom(0, 28)
-
-    for(let i = 0; i < 10; i++){
-
-        // console.log(x, y)
-        p5.currentGrid[x][y] = 'c'
-
-        if(x > numRows / 2){
-           x < numRows - 1 ? x+=1 : undefined
-        }else{
-            x > 0 ? x -= 1 : undefined
-        }
+    switch (target) {
+        case 'w':
+            if (gridCode(p5, i, j, target) != 0) {
+                if (gridCode(p5, i, j, target) === 8) {
+                    placeTile(p5, i, j, ti + 5, tj + (-14))
+                    placeTile(p5, i, j, ti + 4, tj + (-14))
+                    placeTile(p5, i, j, ti + 6, tj + (-14))
+                } else if (gridCode(p5, i, j, target) === 1) {
+                    placeTile(p5, i, j, ti + 4, tj + (-12))
+                    placeTile(p5, i, j, ti + 5, tj + (-12))
+                    placeTile(p5, i, j, ti + 6, tj + (-12))
+                } else if (gridCode(p5, i, j, target) === 2) {
+                    placeTile(p5, i, j, ti + 6, tj + (-12))
+                    placeTile(p5, i, j, ti + 6, tj + (-13))
+                    placeTile(p5, i, j, ti + 6, tj + (-14))
+                } else if (gridCode(p5, i, j, target) === 4) {
+                    placeTile(p5, i, j, ti + 4, tj + (-12))
+                    placeTile(p5, i, j, ti + 4, tj + (-13))
+                    placeTile(p5, i, j, ti + 4, tj + (-14))
+                } else if (gridCode(p5, i, j, target) === 6) {
+                    placeTile(p5, i, j, ti + 5, tj + (-12))
+                    placeTile(p5, i, j, ti + 5, tj + (-14))
+                } else {
+                    const [tioffset, tjoffset] = tileRefrence[gridCode(p5, i, j, target)]
+                    placeTile(p5, i, j, ti + tioffset, tj + tjoffset)
+                }
+            }
+            break
+        case '-':
+            if (gridCode(p5, i, j, target) != 0) {
+                if (gridCode(p5, i, j, target) === 15) {
+                    placeTile(p5, i, j, ti, tj)
+                }
+            }
+            break
+        case 'c':
+            if (gridCode(p5, i, j, target) != 0 && gridCode(p5, i, j, target) !== 15) {
+                const [tioffset, tjoffset] = tileRefrence[gridCode(p5, i, j, target)]
+                placeTile(p5, i, j, ti + tioffset, tj + tjoffset)
+            }
+            break
+        default:
+            break
     }
 }
 
-//here we want to walk through the array and look for non water tiles that are surounded by 3 or more water tiles, then replace with water
-function fillRiver(p5){
+/**
+ * @function generateHallway constructs the initial hallway leading to the main room of dungeon
+ * @param {p5.instance} p5 the current p5 instance to act upon
+ * @returns {void}
+ */
+function generateHallway(p5) {
+
+    let y = getRandom(1, 27)
+
+    let x_init = 0
+    let stepSize = getRandom(3, 9)
+    for (let i = 0; i < stepSize; i++) {
+        p5.currentGrid[x_init][y] = 'c'
+        p5.currentGrid[x_init][y + 1] = 'c'
+        x_init += 1
+    }
+
+    generateRoom(p5, x_init, y)
+}
+
+/**
+ * @function generateRoom generate the main body of the dungeon and the hallway leading south
+ * @param {p5.instance} p5 the current p5 instance to act upon
+ * @param {number} x_init the x coordinate to begin generating the dungeon on
+ * @param {number} y_init the y coordinate to begin generating the dungeon on
+ * @returns {void}
+ */
+function generateRoom(p5, x_init, y_init) {
+
+    let limit = getRandom(4, 15)
+
+    for (let i = 0; i < limit; i++) {
+        for (let j = 0; j < limit; j++) {
+            if (i + x_init < numRows && j + y_init < numCols - 2) {
+                if (limit % 2 !== 0) {
+                    if (i === Math.floor((limit / 2) + 1) && j === Math.floor((limit / 2) + 1)) {
+                        p5.currentGrid[i + x_init][j + y_init] = 'T'
+                        continue
+                    }
+                } else {
+                    if (i === Math.floor((limit / 2)) && j === Math.floor((limit / 2))) {
+                        p5.currentGrid[i + x_init][j + y_init] = 'T'
+                        continue
+                    }
+                }
+                p5.currentGrid[i + x_init][j + y_init] = 'c'
+            }
+        }
+    }
+
+    let tmp1 = limit + x_init - 1
+    let tmp2 = limit + y_init - 2
+
+    while (tmp1 < numCols) {
+        if (tmp2 < numCols) {
+            p5.currentGrid[tmp1][tmp2] = 'c'
+            p5.currentGrid[tmp1][tmp2 - 1] = 'c'
+        }
+        tmp1 += 1
+    }
+}
+
+/**
+ * @function fillRiver /walk through the array and look for non water tiles that are surounded by 3 or more water tiles, then replace with water
+ * @param {p5.instance} p5 the current p5 instance to act upon
+ * @returns {void}
+ */
+function fillRiver(p5) {
     for (let i = 0; i < p5.currentGrid.length; i++) {
         for (let j = 0; j < p5.currentGrid[i].length; j++) {
-            if(p5.currentGrid[i][j] === '-'){
-                if(gridCode(p5, i, j, 'r') === 15 || gridCode(p5, i, j, 'r') === 7){
-                    p5.currentGrid[i][j] = 'r'
+            if (p5.currentGrid[i][j] === '-') {
+                if (gridCode(p5, i, j, 'w') === 15 || gridCode(p5, i, j, 'w') === 7) {
+                    p5.currentGrid[i][j] = 'w'
                 }
             }
         }

@@ -3,10 +3,11 @@
 
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 3 - Procedurally Generated Tilemaps</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
+
 	<!-- Set viewport so page remains consistently scaled w narrow devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -22,6 +23,7 @@
 	<!-- Load p5.js library -->
 	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 
+	<!-- library for seeding the Math global-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
 
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
@@ -37,34 +39,60 @@
 	<main id="content">
 		<section>
 			<h1 style="text-align: center;">Experiment 3 - Procedurally Generated Tilemaps</h1>
+
 			<div class="minor-section" style="display: flex; flex-direction: row; justify-content: center;">
-				<div id="canvas-container" style="width: 512px; height: 512px; margin-bottom: 2%;"></div>
-				<span id="seedReport1" style="padding-left: 2%; padding-right: 2%;"></span>
-				<textarea cols="32" rows="32" id="asciiBox"
-					style="opacity: 0.5; letter-spacing: 1ex; width: 730px; height: 500px; margin-bottom: 2%; font-family: monospace;"></textarea>
+				<div id="canvas-container" style="width: 512px; height: 512px; margin-bottom: 2%; margin-top: 2%;">
+				</div>
+				<div
+					style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin-top: 2%; margin-bottom: 2%; margin-right: 2%;">
+					<span id="seedReport1" style="margin-top: 2%;"></span>
+					<button id="reseedButton1"
+						style="width: 30px; height: 30px; margin-right: 2%; margin-top: 2%; text-align: center;"></button>
+				</div>
+				<textarea cols="30" rows="30" id="asciiBox"
+					style=" opacity: 0.5; letter-spacing: 0.5ex; width: 512px; height: 512px; margin-bottom: 2%; font-family: monospace; margin-top: 2%;"></textarea>
 			</div>
 			<div class="minor-section" style="display: flex; flex-direction: row; justify-content: center;">
-				<div id="canvas-container2" style="width: 515px; height: 515px; margin-bottom: 2%;"></div>
-				<span id="seedReport2" style="padding-left: 2%; padding-right: 2%;"></span>
+				<div id="canvas-container2" style="width: 515px; height: 515px; margin-bottom: 2%; margin-top: 2%;">
+				</div>
+				<div
+					style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin-top: 2%; margin-bottom: 2%; margin-right: 2%;">
+					<span id="seedReport2" style="margin-top: 2%;"></span>
+					<button id="reseedButton2"
+						style="width: 30px; height: 30px; margin-right: 2%; margin-top: 2%; text-align: center;"></button>
+				</div>
 				<textarea cols="32" rows="32" id="asciiBox2"
-					style="opacity: 0.5; letter-spacing: 1ex; width: 730px; height: 500px; margin-bottom: 2%; font-family: monospace;"></textarea>
+					style="opacity: 0.5; letter-spacing: 0.2ex; width: 512px; height: 512px; margin-bottom: 2%; font-family: monospace; margin-top: 2%;"></textarea>
 			</div>
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p style="margin-top: 1.5%;">
+					This experiment is aimed at modeling the main algorithms behind procedural generation of tilemaps, specifically autotiling. All of the autotiling logic occours via a bitmask calculation made on specific tiles. 
+					If you want to test it for yourself, you can edit the top text box and add in 'w' tiles, or you can edit the bottom text box and add 'c' tiles. Enjoy!
+				</p>
 			</div>
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p style="margin-top: 1.5%;">	
+					As mentioned above, much of the technicallity here comes from the autotiling logic. The way this logic works is relatively straightforward. To begin, you pass in an index of an array which in this case correlates to the grid containing each tiles respective character refrence.
+					After the index is read, it is passed into a function that will query around each of the cardinal directions for identical tiles, returning 1 or 0 respectivly. This result is then used to bitmask a final result value which is then passed into a lookup array. The lookup array contains offset values for the respective tile.
+					Essentially what this means is that each tile has corresponding overlapping tiles that will be rendered on top of it in order to give it a less blocky feel.
+				</p>
+				<p>
+					Its also worth mentioning that the lake genration algorithm is a custom modification on the random walk algorithm. The properties of the random walk algorithm did suite the inital generation quite well, but left the lakes/rivers with holes inside and sometimes also produced very thin and awkward looking shapes.
+					I slightly modified the algorithm to not only fill in these holes but to also have a tendency to ensure singular placements of 'w' characters would not occour.
+				</p>
 			</div>
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the
-					successes of the experiment.</p>
+				<p style="margin-top: 2%;">
+					Reflecting on this assignment, I enjoyed this one the most out of the three that we have been assigned so far. This assignment was a challenge for me and I appreciate that I had to spend a good ammount of time researching
+					various topics and algorithms. If I were to change or do anything differently, I would spend more time trying to understand autotiling before working on implementing it, because I spent a lot of time initially working with a fundamentally 
+					flawed understanding of how the autotiling logic works. 
+				</p>
 			</div>
 		</section>
 		<nav id="links" class="minor-section" style="justify-content: center;">
-			<!-- Put link back to homepage here. -->
 			<ul>
 				<li><a href="../index.html">Home</a></li>
 			</ul>
