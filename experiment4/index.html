@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- This title is used for tabs and bookmarks -->
+    <title>Experiment 4 - Infinte Worlds</title>
+
+    <!-- Use UTF character set, a good idea with any webpage -->
+    <meta charset="UTF-8" />
+
+    <!-- Set viewport so page remains consistently scaled w narrow devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Include CSS file, including a site-wide CSS and for this particular page -->
+    <link rel="stylesheet" type="text/css" href="../css/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/site.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
+    <!-- Load jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- Load p5.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+    <!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+
+    <!-- Use me for a p5.js project -->
+    <script src="./src/xxhash.min.js" defer></script>
+    <script type="text/javascript" src="./src/engine.js" DEFER></script>
+    <script type="text/javascript" src="./src/my_world.js" DEFER></script>
+    <script type="text/javascript" src="./src/sketch.js" DEFER></script>
+
+</head>
+
+<body>
+    <!--GPT GENERATED-->
+    <script>
+        // Prevent arrow key scrolling
+        window.addEventListener("keydown", (e) => {
+            // Check if the pressed key is an arrow key
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                // Prevent the default scroll behavior
+                e.preventDefault();
+            }
+        });
+    </script>
+
+
+    <main id="content">
+        <section>
+            <h1 style="text-align: center;">Experiment 4 - Infinte Worlds</h1>
+
+            <div class="minor-section" style="display: grid; justify-content: center; align-items: center;">
+                <div id="canvas-container" style="width: 450px; height: 450px; margin-bottom: 2%; margin-top: 2%;">
+                </div>
+                <span style="text-align: center;">
+                    <p>Arrow Keys to Scroll | Click on a Tile</p>
+                    <input type="text" id="inputBox" placeholder="Enter a seed">
+                </span>
+                <label>
+                    <input type="radio" name="Activate" value="1">
+                    Activate
+                </label>
+                <div id="canvas-container2" style="width: 450px; height: 450px; margin-bottom: 2%; margin-top: 2%;">
+                </div>
+                <span style="text-align: center;">
+                    <p>Arrow Keys to Scroll | Click Anywhere</p>
+                    <input type="text" id="inputBox1" placeholder="Enter a seed">
+                </span>
+                <label>
+                    <input type="radio" name="Activate" value="2">
+                    Activate
+                </label>
+                <div id="canvas-container3" style="width: 450px; height: 450px; margin-bottom: 2%; margin-top: 2%;">
+                </div>
+                <span style="text-align: center;">
+                    <p>Arrow Keys to Scroll | Click on a Tile</p>
+                    <input type="text" id="inputBox2" placeholder="Enter a seed">
+                </span>
+                <label>
+                    <input type="radio" name="Activate" value="3">
+                    Activate
+                </label>
+            </div>
+
+            <div class="minor-section">
+                <h2>Description</h2>
+                <p>
+                    Here is my version of experiment 4 for CMPM 147. The theme of this project is infinite worlds. This
+                    project uses vanilla javascript and p5 js to create an infinite tile renderer that is then iterated
+                    on to build something more creative from the base engine. Through three unique sketches, there are
+                    various programming techniques employed in order to encapsulate the essence of uniquely generated
+                    and infinite worlds
+                </p>
+            </div>
+            <div class="minor-section">
+                <h2>Technical</h2>
+                <p>
+                    The first sketch is the simplest iteration of the base code. This was created by changing many of
+                    the base rendering properties with a focus on enhancing the aesthetics of the sketch through
+                    color variations and some basic mathematical techniques. Randomness is used to choose the tile color placement,
+                    and a simple sparkle effect is added in as well. Finally, ellipses can be rendered to the screen
+                    which will oscillate along the y-axis infinitely until toggled off.
+                </p>
+                <p>
+                    The second sketch is another iteration on the base engine this time opting to use WEBGL to render
+                    some 3D shapes instead of the original vertex-based tiles. This gives the project a fresh feel and
+                    adds some depth and uniqueness to it. This was done by calling the cube function and adding some
+                    logic to re-position the camera based on user clicks.
+                </p>
+                <p>
+                    The third sketch is the most unique when compared to the starting point of the initial engine. This
+                    sketch renders some cartoon-looking pine trees, in addition to some grassy patches that are
+                    generated with Perlin noise. Finally, the user can click on tiles to render a pseudo-3D tile that
+                    gives some depth to the sketch. This is achieved by using some translation logic and drawing some
+                    thin lines to give the effect of depth and 3D
+                </p>
+            </div>
+            <div class="minor-section">
+                <h2>Reflection</h2>
+                <p>
+                    Reflecting on my work on this assignment, I think that I did a solid job of getting everything set
+                    up and optimized. My program runs very smoothly and has minimal input lag. In addition, I was able
+                    to do 3 unique renderings each with their special twist. However, looking at some of the other
+                    peers' work, I will concede that my work is very simplistic when compared to some of the others. If
+                    I were to do this assignment again, I would spend more time on one sketch to develop something that
+                    is truly awe-inspiring. Regardless, I put a lot of time into getting everything set up the way it is
+                    and ensuring user satisfaction via easy controls and minimal lag. I enjoyed this project, as I felt
+                    that it was very interesting to dive deeper into the engine code and understand what goes into the
+                    main logic behind what rendered the worlds endlessly.
+                </p>
+            </div>
+        </section>
+        <nav id="links" class="minor-section" style="justify-content: center;">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+        </nav>
+    </main>
+</body>
+
+</html>
