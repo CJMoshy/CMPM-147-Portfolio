@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- This title is used for tabs and bookmarks -->
+    <title>Experiment 5 - Evolutionary Impressions</title>
+
+    <!-- Use UTF character set, a good idea with any webpage -->
+    <meta charset="UTF-8" />
+    <!-- Set viewport so page remains consistently scaled w narrow devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Include CSS file, including a site-wide CSS and for this particular page -->
+    <link rel="stylesheet" type="text/css" href="../css/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/site.css">
+    <!-- <link rel="stylesheet" type="text/css" href="styles/styles.css"> -->
+
+    <!-- Load jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Load p5.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+    <!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFEsR></script>
+    <!-- Use me for a p5.js project -->
+    <script type="text/javascript" src="./my_design.js" DEFER></script>
+    <script type="text/javascript" src="./sketch.js" DEFER></script>
+</head>
+
+<body>
+    <!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+    <main id="content">
+        <section>
+
+            <h1 style="text-align:  center;">Experiment 5 - Evolutionary Impressions</h1>
+
+            <div class="minor-section results">
+                <div class="results-top" style="text-align:  center;">
+                    <div id="image-container" style=" display: flex; justify-content: center; padding-bottom: 2vh;">
+                    </div>
+                    <p>Original</p>
+                    <div id="image-container2" style=" display: flex; justify-content: center; margin-bottom: 2vh;">
+                    </div>
+                    <p>Active Image</p>
+                    <div id="image-container3" style="margin-bottom: 2vh;">
+                        <p id="memory" data-max-items="28"></p>
+                    </div>
+                    <p>Best Renders</p>
+                </div>
+
+                <div class="controls">
+                    <div class="controls-col1">
+                        <select id="dropper"></select>
+                        <button id="restart">restart</button>
+                        <button id="clear">clear best renders</button>
+                        <p style="margin-top: 1vh;">
+                            Mutation rate (<span id="rate"></span>%):<br /><input id="slider" type="range" min="1"
+                                max="100" value="100" />
+                        </p>
+                        <label>
+                            <input type="radio" name="shape" value="1" checked>
+                            Circle
+                        </label>
+                        <label>
+                            <input type="radio" name="shape" value="2">
+                            Hexagon
+                        </label>
+                        <label>
+                            <input type="radio" name="shape" value="3">
+                            Octagon
+                        </label>
+                    </div>
+                    <div class="controls-col2">
+                        <p>Active score: <span id="activeScore"></span></p>
+                        <p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+                        <p>Best score: <span id="bestScore"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="minor-section">
+                <h2>Description</h2>
+                <p style="margin-top: 1vh;">In this programming assignment, we're building a generator that directly
+                    reads inspiring images,
+                    renders parameterized images, and adjusts its own designs to optimize an evaluation score. My
+                    approach opts to implement custom algorithms that do all of the processing and generation.</p>
+            </div>
+
+            <div class="minor-section">
+                <h2>Technical</h2>
+                <p style="margin-top: 1vh;">The technicallity seen here is largely within the image processing
+                    algorithms. I opted to write
+                    custom processing algorithms that parse the p5 pixel-array into a more malleable format, returrning
+                    a 2d array of RGB values corresponding to each pixels color value. This was necessary because the
+                    main p5 pixel array is one dimensional and much more diffuclt to do any processing with. </p>
+                <p style="margin-top: 1vh;">The program works by first processing the pixel array and then parsing the
+                    processed array into a
+                    series of objects that represent a given color and x,y coordinate. This parsing is done by taking a
+                    square sub array from the processed pixels array and then averaging the RGB values within the
+                    square. The result is then returned to the rendering loop which will render a predetermined shape at
+                    the corresponding x,y location.</p>
+            </div>
+
+            <div class="minor-section">
+                <h2>Reflection</h2>
+                <p style="margin-top: 1vh;">I really wanted to challenge myself this time around. I could've very easily
+                    just used the templated
+                    example code and spent some time tuning the parameters to get something that worked and looked
+                    decent, but that didn't cut it for me. That's why I decided to write the entire application from
+                    scratch. Doing this provided me with some great algorithm practice and a more in-depth understanding
+                    of how someone might approach a problem like this.</p>
+
+            </div>
+
+        </section>
+        <nav id="links" class="minor-section" style="justify-content: center;">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+        </nav>
+    </main>
+</body>
+
+</html>
